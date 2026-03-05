@@ -6,33 +6,49 @@ import java.util.UUID;
 
 public class NotificationBuilder {
 
-    private String id;
-    private String message;
-    private LocalDateTime timestamp;
-    private int priority;
-    private User recipient;
+    private Notification notification;
 
     public void reset() {
-        id = UUID.randomUUID().toString();
-        message = "";
-        timestamp = LocalDateTime.now();
-        priority = 0;
-        recipient = null;
+        notification = new Notification(
+            UUID.randomUUID().toString(),
+            "",
+            LocalDateTime.now(),
+            0,
+            null
+        );
     }
 
     public void buildMessage(String msg) {
-        message = msg;
+        notification = new Notification(
+            notification.getId(),
+            msg,
+            notification.getTimestamp(),
+            notification.getPriority(),
+            notification.getRecipient()
+        );
     }
 
     public void buildPriority(int priority) {
-        this.priority = priority;
+        notification = new Notification(
+            notification.getId(),
+            notification.getMessage(),
+            notification.getTimestamp(),
+            priority,
+            notification.getRecipient()
+        );
     }
 
     public void chooseUser(User user) {
-        this.recipient = user;
+        notification = new Notification(
+            notification.getId(),
+            notification.getMessage(),
+            notification.getTimestamp(),
+            notification.getPriority(),
+            user
+        );
     }
 
     public Notification build() {
-        return new Notification(id, message, timestamp, priority, recipient);
+        return notification;
     }
 }
